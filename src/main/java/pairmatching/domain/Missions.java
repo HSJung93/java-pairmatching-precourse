@@ -39,4 +39,10 @@ public class Missions {
     public static List<Mission> getMissionList(Level level) {
         return levelListMap.get(level);
     }
+
+    public static Mission getMission(Level level, String missionName) {
+        return getMissionList(level).stream()
+                .filter(mission -> mission.getName().equals(missionName)).findFirst().orElseThrow(
+                        () -> new IllegalArgumentException("[ERROR] 해당 레벨에 입력하신 미션이 존재하지 않습니다."));
+    }
 }
