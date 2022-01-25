@@ -36,7 +36,7 @@ public class Missions {
 
     }
 
-    public static List<Mission> getCrewList(Level level) {
+    public static List<Mission> getMissionList(Level level) {
         return levelListMap.get(level);
     }
 }
