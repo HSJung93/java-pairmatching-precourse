@@ -33,10 +33,15 @@ public class Missions {
         levelListMap.put(Level.LEVEL1, level1Missions);
         levelListMap.put(Level.LEVEL2, level1Missions);
         levelListMap.put(Level.LEVEL4, level1Missions);
+        levelListMap.put(Level.LEVEL3, null);
+        levelListMap.put(Level.LEVEL5, null);
 
     }
 
     public static List<Mission> getMissionList(Level level) {
+        if (level == Level.LEVEL3 || level == Level.LEVEL5) {
+            throw new IllegalArgumentException("[ERROR] 레벨3와 레벨5에는 미션이 존재하지 않습니다.");
+        }
         return levelListMap.get(level);
     }
 
