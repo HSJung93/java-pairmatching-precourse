@@ -1,5 +1,6 @@
 package pairmatching.domain;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Crew {
@@ -28,6 +29,10 @@ public class Crew {
 
     public String getName() {
         return name;
+    }
+
+    public static List<String> getCrewNames(List<Crew> crewList) {
+        return crewList.stream().map(Crew::getName).collect(Collectors.toList());
     }
 
 
