@@ -31,4 +31,13 @@ public class Crews {
     public static List<Crew> getCrewList(Course course) {
         return crewListMap.get(course);
     }
+
+    public static List<String> getCrewNames(List<Crew> crewList) {
+        List<String> crewNames = new ArrayList<>();
+
+        for (Crew crew : crewList) {
+            crewNames.add(crew.getName());
+        }
+        return crewNames;
+    }
 }

@@ -3,6 +3,7 @@ package pairmatching.controller;
 import static pairmatching.domain.Crews.*;
 import static pairmatching.domain.Missions.*;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import pairmatching.domain.Course;
 import pairmatching.domain.Crew;
@@ -15,13 +16,12 @@ import pairmatching.view.InputView;
 import pairmatching.view.OutputView;
 
 public class Controller {
+
+    private Mission mission;
+    private List<Crew> crewList = new ArrayList<>();
+
     public void init() {
-        try {
-            InitService.initCrew();
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-        InitService.initMission();
+        setInitStatus();
 
         while (true) {
             String mainOption = InputView.selectFunction();
@@ -37,20 +37,20 @@ public class Controller {
         }
     }
 
+    private void setInitStatus() {
+        try {
+            InitService.initCrew();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        InitService.initMission();
+    }
+
     public void matchingPair() {
-        String missionInformation = InputView.inputMission();
-        String[] splitInformation = missionInformation.split(",");
-        Course course = Course.mappingStringValue(splitInformation[0].trim());
-        Level level = Level.mappingStringValue(splitInformation[1].trim());
-
-        List<Crew> crewList = getCrewList(course);
-        List<Mission> missionList = getMissionList(level);
-
-        Mission mission = getMission(level, splitInformation[2].trim());
-        // List<Pair> pairList = Pairs.createPair(crewList, mission);
+        inputMissionWithErrorHandling();
 
         String pairRematching = "";
-        if (Pairs.isExistPair(mission)) {
+        if (Pairs.isContainPairing(mission)) {
             pairRematching = InputView.inputPairRematching().trim();
         }
 
@@ -67,24 +67,39 @@ public class Controller {
     }
 
 
-    public void showPair() {
-        String missionInformation = InputView.inputMission();
-        String[] splitInformation = missionInformation.split(",");
+    private void inputMissionWithErrorHandling() {
 
-        Course course = Course.mappingStringValue(splitInformation[0].trim());
-        Level level = Level.mappingStringValue(splitInformation[1].trim());
+        try{
+            String missionInformation = InputView.inputMission();
+            String[] splitInformation = missionInformation.split(",");
 
-        List<Crew> crewList = getCrewList(course);
-        List<Mission> = getMission(level, splitInformation[2].trim());
+            if (splitInformation.length < 3) {
+                throw new IllegalArgumentException("[ERROR] 과정, 레벨, 미션을 다 입력해주셔야 합니다.");
+            }
 
-        if(Pairs.isExistPair(mission)){
-            OutputView.alarmPairMatchingResult();
+            Level level = Level.mappingStringValue(splitInformation[1].trim());
+
+            crewList = getCrewList(Course.mappingStringValue(splitInformation[0].trim()););
+            List<Mission> missionList = getMissionList(level);
+
+            mission = getMission(level, splitInformation[2].trim());
+        }catch (IllegalArgumentException e){
+            System.out.println(e.getMessage());
+            inputMissionWithErrorHandling();
         }
+    }
 
-        for(Pair pair: Pairs.getPairList(mission)){
-            OutputView.showPairMatchingResult(getCrewNames(pair.getCrews()));
-        }else{
-            System.out.println("[ERROR] 매칭 이력이 없습니다.");
+    public void showPair() {
+        inputMissionWithErrorHandling();
+
+        try {
+            OutputView.alarmPairMatchingResult();
+            for (Pair pair : Pairs.getPairList(mission)) {
+                OutputView.showPairMatchingResult(getCrewNames(pair.getCrews()));
+            }
+
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
         }
 
 

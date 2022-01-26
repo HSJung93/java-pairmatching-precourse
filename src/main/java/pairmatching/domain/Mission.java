@@ -15,6 +15,10 @@ public class Mission {
         return name;
     }
 
+    public Level getLevel() {
+        returen level;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o)
