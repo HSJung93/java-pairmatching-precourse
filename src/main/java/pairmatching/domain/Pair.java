@@ -22,25 +22,25 @@ public class Pair {
         return mission;
     }
 
-    public boolean equals(Pair pair) {
-        Set<Crew> crewSet = new HashSet<>();
+    // public boolean equals(Pair pair) {
+    // Set<Crew> crewSet = new HashSet<>();
 
-        for (Crew crew : crews) {
-            crewSet.add(crew);
-        }
+    // for (Crew crew : crews) {
+    // crewSet.add(crew);
+    // }
 
-        for (Crew crew : pair.getCrews()) {
-            crewSet.add(crew);
-        }
+    // for (Crew crew : pair.getCrews()) {
+    // crewSet.add(crew);
+    // }
 
-        if (crewSet.size() == pair.getCrews().size()) {
-            return true;
-        }
-        return false;
-    }
+    // if (crewSet.size() == pair.getCrews().size()) {
+    // return true;
+    // }
+    // return false;
+    // }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(crews);
-    }
+    // @Override
+    // public int hashCode() {
+    // return Objects.hash(crews);
+    // }
 }

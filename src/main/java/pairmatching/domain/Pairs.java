@@ -10,13 +10,17 @@ public class Pairs {
     // private static List<Pair> pairList = new ArrayList<>();
     private static Map<Mission, List<Pair>> missionListMap = new HashMap<>();
 
+    public static List<Pair> getPairList(Mission mission) {
+        validatePairMatchingExist(mission);
+        return missionListMap.get(mission);
+    }
 
     public static void createPair(List<Crew> crewList, Mission mission) {
         List<Crew> shuffle = Randoms.shuffle(crewList);
-        if (shuffle.size() % 2 == 0){
+        if (shuffle.size() % 2 == 0) {
             missionListMap.put(mission, createEvenPair(shuffle, mission));
-        }else{
-            missionListMap.put(mission, createOddPair(shuffle, mission)))
+        } else {
+            missionListMap.put(mission, createOddPair(shuffle, mission));
         }
 
     }
@@ -34,8 +38,6 @@ public class Pairs {
 
     public static List<Pair> createOddPair(List<Crew> shuffle, Mission mission) {
 
-
-
         List<Pair> pairList = new ArrayList<>();
 
         for (int i = 0; i < shuffle.size() - 4; i += 2) {
@@ -52,7 +54,7 @@ public class Pairs {
 
     }
 
-    public static boolean isContainParing(Mission mission) {
+    public static boolean isContainPairing(Mission mission) {
 
         if (missionListMap.containsKey(mission)) {
             return true;

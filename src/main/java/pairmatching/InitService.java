@@ -1,4 +1,4 @@
-package pairmatching.service;
+package pairmatching;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -53,7 +53,7 @@ public class InitService {
         }
 
         String frontNames;
-        while ((frontNames = frontendReader.readLine()) != null) {
+        while ((frontNames = frontReader.readLine()) != null) {
             frontendCrewNames.add(frontNames);
         }
 

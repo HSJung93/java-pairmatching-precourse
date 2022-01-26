@@ -5,13 +5,13 @@ import static pairmatching.domain.Missions.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import pairmatching.InitService;
 import pairmatching.domain.Course;
 import pairmatching.domain.Crew;
 import pairmatching.domain.Level;
 import pairmatching.domain.Mission;
 import pairmatching.domain.Pair;
 import pairmatching.domain.Pairs;
-import pairmatching.service.InitService;
 import pairmatching.view.InputView;
 import pairmatching.view.OutputView;
 
@@ -69,7 +69,7 @@ public class Controller {
 
     private void inputMissionWithErrorHandling() {
 
-        try{
+        try {
             String missionInformation = InputView.inputMission();
             String[] splitInformation = missionInformation.split(",");
 
@@ -79,11 +79,11 @@ public class Controller {
 
             Level level = Level.mappingStringValue(splitInformation[1].trim());
 
-            crewList = getCrewList(Course.mappingStringValue(splitInformation[0].trim()););
+            crewList = getCrewList(Course.mappingStringValue(splitInformation[0].trim()));
             List<Mission> missionList = getMissionList(level);
 
             mission = getMission(level, splitInformation[2].trim());
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             inputMissionWithErrorHandling();
         }
